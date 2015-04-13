@@ -1,0 +1,13 @@
+{
+  "name": "puppetfinland-samba4",
+  "version": "0.1.0",
+  "author": "Puppet-Finland team",
+  "license": "BSD license",
+  "summary": "Setup Samba 4",
+  "source": "https://github.com/Puppet-Finland/samba4.git",
+  "project_page": "https://github.com/Puppet-Finland/samba4",
+  "dependencies": [
+    { "name": "puppetfinland/os", "version_requirement": ">= 0.5.6" },
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.1.0" }
+  ]
+}
