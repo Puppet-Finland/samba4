@@ -5,7 +5,7 @@ A Puppet module for managing Samba 4
 # Module usage
 
 * [Class: samba4](manifests/init.pp)
-* [Class: samba4](manifests/server.pp)
+* [Class: samba4::server](manifests/server.pp)
 
 # Dependencies
 
