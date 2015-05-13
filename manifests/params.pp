@@ -5,7 +5,7 @@
 #
 class samba4::params {
 
-    include os::params
+    include ::os::params
 
     # We currently only support Debian 8 ("Jessie"). Adding support for other
     # operating systems should be fairly straightforward, provided that their

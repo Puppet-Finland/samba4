@@ -47,20 +47,20 @@ class samba4::server
 
 if $manage == 'yes' {
 
-    include samba4::server::install
+    include ::samba4::server::install
 
     if $manage_config == 'yes' {
-        class { 'samba4::server::config':
-            adminpass => $adminpass,
-            realm => $realm,
-            domain => $domain,
+        class { '::samba4::server::config':
+            adminpass   => $adminpass,
+            realm       => $realm,
+            domain      => $domain,
             server_role => $server_role,
-            host_ip => $host_ip,
-            host_name => $host_name
+            host_ip     => $host_ip,
+            host_name   => $host_name
         }
     }
 
-    class { 'samba4::server::service':
+    class { '::samba4::server::service':
         server_role => $server_role,
     }
 }

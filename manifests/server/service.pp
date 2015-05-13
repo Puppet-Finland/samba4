@@ -10,7 +10,7 @@ class samba4::server::service
 ) inherits samba4::params
 {
     if $server_role == 'dc' {
-        include samba4::server::service::dc
+        include ::samba4::server::service::dc
     }
 }
 
