@@ -21,6 +21,7 @@ class samba4::params {
 
             $piddir = '/var/run/samba'
             $libdir = '/var/lib/samba'
+            $sysvol = "${libdir}/sysvol"
             $samba_pidfile = "${piddir}/samba.pid"
         }
         default: {
