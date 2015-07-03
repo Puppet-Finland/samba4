@@ -20,7 +20,7 @@
 #   The NT4/Netbios domain name. Must not exceed 15 characters in length or have 
 #   any punctuation marks in it. Typically this is the first part of the AD 
 #   domain name, e.g. 'SMB'.
-# [*server_role*]
+# [*role*]
 #   Role of this server. Currently the only valid value is 'dc', although Samba 
 #   4 itself supports others as well.
 # [*host_ip*]
@@ -37,7 +37,7 @@ class samba4::server
     $adminpass,
     $realm,
     $domain,
-    $server_role,
+    $role,
     $host_ip,
     $host_name,
     $monitor_email = $::servermonitor
@@ -54,14 +54,14 @@ if $manage == 'yes' {
             adminpass   => $adminpass,
             realm       => $realm,
             domain      => $domain,
-            server_role => $server_role,
+            role        => $role,
             host_ip     => $host_ip,
             host_name   => $host_name
         }
     }
 
     class { '::samba4::server::service':
-        server_role => $server_role,
+        role => $role,
     }
 }
 }

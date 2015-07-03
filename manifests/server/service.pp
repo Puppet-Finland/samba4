@@ -5,7 +5,7 @@
 #
 class samba4::server::service
 (
-    $server_role
+    $role
 
 ) inherits samba4::params
 {
@@ -19,15 +19,15 @@ class samba4::server::service
         name => $::samba4::params::samba_nmbd_service_name,
     }
 
-    if $server_role == 'dc' {
+    if $role == 'dc' {
         service { 'samba4-samba-ad-dc':
             name => $::samba4::params::samba_ad_dc_service_name,
         }
-    } elsif $server_role == 'member' {
+    } elsif $role == 'member' {
         service { 'samba4-samba-smbd':
             name => $::samba4::params::samba_smbd_service_name,
         }
     } else {
-        fail("ERROR: Invalid value ${server_role} for parameter \$server_role!")
+        fail("ERROR: Invalid value ${role} for parameter \$role!")
     }
 }
