@@ -23,7 +23,7 @@ class samba4::server::config::dc
     # Add static resolv.conf
     class { '::resolv_conf':
         nameservers => ['127.0.0.1'],
-        domainname => $realm_lc,
+        domainname  => $realm_lc,
     }
 
     # Provision the domain
@@ -32,7 +32,7 @@ class samba4::server::config::dc
         path    => ['/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => "${::samba4::params::sysvol}/${realm_lc}",
         require => Class['samba4::server::install'],
-        notify  => Class['samba4::server::service::dc'],
+        notify  => Class['samba4::server::service'],
     }
 
 }

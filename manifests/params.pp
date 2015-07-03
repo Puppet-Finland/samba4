@@ -17,6 +17,8 @@ class samba4::params {
             $smbclient_package_name = 'smbclient'
             $krb5_user_package_name = 'krb5-user'
 
+            $samba_smbd_service_name = 'smbd'
+            $samba_nmbd_service_name = 'nmbd'
             $samba_ad_dc_service_name = 'samba-ad-dc'
 
             $piddir = '/var/run/samba'
