@@ -8,6 +8,8 @@
   "project_page": "https://github.com/Puppet-Finland/samba4",
   "dependencies": [
     { "name": "puppetfinland/os", "version_requirement": ">= 0.5.6" },
+    { "name": "puppetfinland/setfacl", "version_requirement": ">= 0.2.1" },
+    { "name": "puppetlabs/concat", "version_requirement": ">= 1.1.2" },
     { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.1.0" },
     { "name": "saz/resolv_conf", "version_requirement": ">= 3.0.3" }
    ]

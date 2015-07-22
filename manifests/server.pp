@@ -76,6 +76,9 @@
 #   samba4::server::host_name: 'MEMBER'
 #   samba4::server::host_ip: '192.168.81.11'
 #   samba4::server::role: 'member'
+#   samba4::server::fileshares:
+#     guestshare:
+#       path: '/srv/samba/guestshare'
 #
 class samba4::server
 (
@@ -97,6 +100,11 @@ class samba4::server
 if $manage == 'yes' {
 
     include ::samba4::client
+
+    class { '::samba4::server::prequisites':
+        role => $role,
+    }
+
     include ::samba4::server::install
 
     if $manage_config == 'yes' {
