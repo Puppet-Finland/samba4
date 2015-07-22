@@ -17,9 +17,23 @@ class samba4::params {
             $smbclient_package_name = 'smbclient'
             $krb5_user_package_name = 'krb5-user'
 
+            $samba_config_name = '/etc/samba/smb.conf'
+            $krb5_config_name = '/etc/krb5.conf'
+
             $samba_smbd_service_name = 'smbd'
             $samba_nmbd_service_name = 'nmbd'
             $samba_ad_dc_service_name = 'samba-ad-dc'
+
+            $service_start_cmd = "${::os::params::systemctl} start"
+            $service_stop_cmd  = "${::os::params::systemctl} stop"
+
+            $samba_smbd_service_start  = "${service_start_cmd} ${samba_smbd_service_name}"
+            $samba_nmbd_service_start  = "${service_start_cmd} ${samba_nmbd_service_name}"
+            $samba_ad_dc_service_start = "${service_start_cmd} ${samba_ad_dc_service_name}"
+
+            $samba_smbd_service_stop  = "${service_stop_cmd} ${samba_smbd_service_name}"
+            $samba_nmbd_service_stop  = "${service_stop_cmd} ${samba_nmbd_service_name}"
+            $samba_ad_dc_service_stop = "${service_stop_cmd} ${samba_ad_dc_service_name}"
 
             $piddir = '/var/run/samba'
             $libdir = '/var/lib/samba'

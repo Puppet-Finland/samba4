@@ -12,6 +12,7 @@ class samba4::server::service
 
     Service {
         enable  => true,
+        ensure  => running,
         require => Class['samba4::server::install'],
     }
 

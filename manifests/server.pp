@@ -27,8 +27,53 @@
 #   IP-address of this host.
 # [*host_name*]
 #   The AD hostname for this host. Typically something like 'DC1'.
+# [*dns_server*]
+#   Name of the DNS server. On domain controllers this should be (and defaults 
+#   to) 127.0.0.1. On member servers this should be set to the IP address of the 
+#   domain controller.
 # [*monitor_email*]
 #   Server monitoring email. Defaults to $::servermonitor.
+#
+#
+# == Examples
+#
+# Common Samba 4 parameters can be set at the lowest level in Hiera:
+#
+#   samba4::server::realm: 'SMB.DOMAIN.COM'
+#   samba4::server::domain: 'SMB'
+#
+# On the Samba 4 Domain Controller use something like this:
+#
+#   ---
+#   classes:
+#     - dhclient
+#     - samba4::server
+#   
+#   # The DC must have a static IP address and resolver configuration
+#   dhclient::ensure: 'absent'
+#   
+#   samba4::server::adminpass: 'verysecret'
+#   samba4::server::dns_server: '127.0.0.1'
+#   samba4::server::host_name: 'DC1'
+#   samba4::server::host_ip: '192.168.81.10'
+#   samba4::server::role: 'dc'
+#
+# Setting up a member server:
+#
+#   ---
+#   classes:
+#     - dhclient
+#     - samba4::server
+#
+#   # The member server could use DHCP, even though here we use static IPs and 
+#   # resolver configuration.
+#   dhclient::ensure: 'absent'
+#
+#   # The member server needs to point to Samba's DNS server
+#   samba4::server::dns_server: '192.168.81.10'
+#   samba4::server::host_name: 'MEMBER'
+#   samba4::server::host_ip: '192.168.81.11'
+#   samba4::server::role: 'member'
 #
 class samba4::server
 (
@@ -40,6 +85,7 @@ class samba4::server
     $role,
     $host_ip,
     $host_name,
+    $dns_server = undef,
     $monitor_email = $::servermonitor
 
 ) inherits samba4::params
@@ -47,16 +93,18 @@ class samba4::server
 
 if $manage == 'yes' {
 
+    include ::samba4::client
     include ::samba4::server::install
 
     if $manage_config == 'yes' {
         class { '::samba4::server::config':
-            adminpass   => $adminpass,
-            realm       => $realm,
-            domain      => $domain,
-            role        => $role,
-            host_ip     => $host_ip,
-            host_name   => $host_name
+            adminpass  => $adminpass,
+            realm      => $realm,
+            domain     => $domain,
+            role       => $role,
+            host_ip    => $host_ip,
+            host_name  => $host_name,
+            dns_server => $dns_server,
         }
     }
 
