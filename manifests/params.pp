@@ -17,7 +17,8 @@ class samba4::params {
             $smbclient_package_name = 'smbclient'
             $krb5_user_package_name = 'krb5-user'
 
-            $samba_config_name = '/etc/samba/smb.conf'
+            $samba_config_dir = '/etc/samba'
+            $samba_config_name = "${samba_config_dir}/smb.conf"
             $krb5_config_name = '/etc/krb5.conf'
 
             $samba_smbd_service_name = 'smbd'

@@ -12,6 +12,7 @@ class samba4::server::config
     $host_ip,
     $host_name,
     $dns_server,
+    $fileshares
 
 ) inherits samba4::params
 {
@@ -36,9 +37,10 @@ class samba4::server::config
         }
     } elsif $role == 'member' {
         class { '::samba4::server::config::member':
-            realm     => $realm,
-            domain    => $domain,
-            host_name => $host_name,
+            realm      => $realm,
+            domain     => $domain,
+            host_name  => $host_name,
+            fileshares => $fileshares,
         }
     } else {
         fail("Invalid value ${role} for parameter role!")

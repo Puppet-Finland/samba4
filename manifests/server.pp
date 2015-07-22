@@ -11,7 +11,8 @@
 #   Whether to manage Samba 4 configuration using Puppet or not. Valid values 
 #   'yes' (default) and 'no'.
 # [*adminpass*]
-#   The administrator password for the Samba 4 server.
+#   Administrator password for the Samba 4 server. Only required for the domain 
+#   controller ($role = 'dc').
 # [*realm*]
 #   The Kerberos realm, which will also be used as the Active Directory domain 
 #   name. This parameter will be automatically converted to uppercase as needed. 
@@ -33,7 +34,8 @@
 #   domain controller.
 # [*monitor_email*]
 #   Server monitoring email. Defaults to $::servermonitor.
-#
+# [*fileshares*]
+#   A hash of samba4::fileshare resources to realize. Empty by default.
 #
 # == Examples
 #
@@ -79,14 +81,15 @@ class samba4::server
 (
     $manage = 'yes',
     $manage_config = 'yes',
-    $adminpass,
+    $adminpass = undef,
     $realm,
     $domain,
     $role,
     $host_ip,
     $host_name,
     $dns_server = undef,
-    $monitor_email = $::servermonitor
+    $monitor_email = $::servermonitor,
+    $fileshares = {}
 
 ) inherits samba4::params
 {
@@ -105,6 +108,7 @@ if $manage == 'yes' {
             host_ip    => $host_ip,
             host_name  => $host_name,
             dns_server => $dns_server,
+            fileshares => $fileshares,
         }
     }
 
