@@ -21,12 +21,10 @@ class samba4::server::service
     }
 
     if $role == 'dc' {
-        service { 'samba4-samba-ad-dc':
-            name => $::samba4::params::samba_ad_dc_service_name,
-        }
+        service { $::samba4::params::samba_ad_dc_service_name: }
     } elsif $role == 'member' {
-        service { 'samba4-samba-smbd':
-            name => $::samba4::params::samba_smbd_service_name,
+        service { [ $::samba4::params::samba_smbd_service_name,
+                    $::samba4::params::samba_winbind_service_name, ]:
         }
     } else {
         fail("ERROR: Invalid value ${role} for parameter \$role!")

@@ -48,17 +48,6 @@ class samba4::server::config::dc
         creates => "${::samba4::params::sysvol}/${realm_lc}",
         require => [ Exec['rename-smb.conf'], Class['samba4::server::install'] ],
         notify  => Class['samba4::server::service'],
-        before  => Class['resolv_conf'],
-    }
-
-    # Configure Kerberos
-    file { 'samba4-krb5.conf':
-        ensure  => present,
-        name    => $::samba4::params::krb5_config_name,
-        content => template('samba4/krb5.conf.erb'),
-        owner   => $::os::params::adminuser,
-        group   => $::os::params::admingroup,
-        mode    => '0644',
-        require => Exec['samba4-domain-provisioning'],
+        before  => [ Class['resolv_conf'], File['samba4-krb5.conf'] ],
     }
 }

@@ -16,6 +16,9 @@ class samba4::params {
             $samba_package_name = 'samba'
             $smbclient_package_name = 'smbclient'
             $krb5_user_package_name = 'krb5-user'
+            $winbind_package_name = 'winbind'
+            $libpam_winbind_package_name = 'libpam-winbind'
+            $libnss_winbind_package_name = 'libnss-winbind'
 
             $samba_config_dir = '/etc/samba'
             $samba_config_name = "${samba_config_dir}/smb.conf"
@@ -23,17 +26,20 @@ class samba4::params {
 
             $samba_smbd_service_name = 'smbd'
             $samba_nmbd_service_name = 'nmbd'
+            $samba_winbind_service_name = 'winbind'
             $samba_ad_dc_service_name = 'samba-ad-dc'
 
             $service_start_cmd = "${::os::params::systemctl} start"
             $service_stop_cmd  = "${::os::params::systemctl} stop"
 
-            $samba_smbd_service_start  = "${service_start_cmd} ${samba_smbd_service_name}"
-            $samba_nmbd_service_start  = "${service_start_cmd} ${samba_nmbd_service_name}"
+            $samba_smbd_service_start = "${service_start_cmd} ${samba_smbd_service_name}"
+            $samba_nmbd_service_start = "${service_start_cmd} ${samba_nmbd_service_name}"
+            $samba_winbind_service_start = "${service_start_cmd} ${samba_winbind_service_name}"
             $samba_ad_dc_service_start = "${service_start_cmd} ${samba_ad_dc_service_name}"
 
-            $samba_smbd_service_stop  = "${service_stop_cmd} ${samba_smbd_service_name}"
-            $samba_nmbd_service_stop  = "${service_stop_cmd} ${samba_nmbd_service_name}"
+            $samba_smbd_service_stop = "${service_stop_cmd} ${samba_smbd_service_name}"
+            $samba_nmbd_service_stop = "${service_stop_cmd} ${samba_nmbd_service_name}"
+            $samba_winbind_service_stop = "${service_stop_cmd} ${samba_winbind_service_name}"
             $samba_ad_dc_service_stop = "${service_stop_cmd} ${samba_ad_dc_service_name}"
 
             $piddir = '/var/run/samba'

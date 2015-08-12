@@ -1,5 +1,5 @@
 #
-# == Class: samba4::config::member
+# == Class: samba4::server::config::member
 #
 # Configure Samba 4 AD member server
 #
@@ -42,4 +42,13 @@ class samba4::server::config::member
 
     # Add smb.conf fragment for each fireshare
     create_resources('samba4::fileshare', $fileshares)
+
+    # Configure nsswitch.conf
+    class { '::nsswitch':
+        passwd => [ 'compat', 'winbind' ],
+        group  => [ 'compat', 'winbind' ],
+    }
+
+    # TODO: join domain using "net ads join"
+    # TODO: configure libpam-winbind
 }

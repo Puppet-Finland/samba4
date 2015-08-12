@@ -6,12 +6,12 @@
   realm = <%= realm_uc %>
   dedicated keytab file = /etc/krb5.keytab
   kerberos method = secrets and keytab
+  encrypt passwords = yes
+  template shell = /bin/bash
 
-  idmap config *:backend = tdb
-  idmap config *:range = 2000-9999
-  idmap config <%= domain_uc %>:backend = ad
-  idmap config <%= domain_uc %>:schema_mode = rfc2307
-  idmap config <%= domain_uc %>:range = 10000-99999
+  idmap config *:backend = rid
+  idmap config *:range = 10000-99999
+  idmap config *:schema_mode = rfc2307
 
   winbind nss info = rfc2307
   winbind trusted domains only = no

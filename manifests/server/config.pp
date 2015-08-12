@@ -11,6 +11,7 @@ class samba4::server::config
     $role,
     $host_ip,
     $host_name,
+    $kdc,
     $dns_server,
     $fileshares
 
@@ -19,10 +20,21 @@ class samba4::server::config
 
     # Add static resolv.conf
     $realm_lc = downcase($realm)
+    $realm_uc = upcase($realm)
 
     class { '::resolv_conf':
         nameservers => [$dns_server],
         domainname  => $realm_lc,
+    }
+
+    # Configure Kerberos
+    file { 'samba4-krb5.conf':
+        ensure  => present,
+        name    => $::samba4::params::krb5_config_name,
+        content => template('samba4/krb5.conf.erb'),
+        owner   => $::os::params::adminuser,
+        group   => $::os::params::admingroup,
+        mode    => '0644',
     }
 
     # Make this Samba 4 instance a Domain Controller

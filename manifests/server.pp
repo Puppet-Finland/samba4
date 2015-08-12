@@ -28,6 +28,9 @@
 #   IP-address of this host.
 # [*host_name*]
 #   The AD hostname for this host. Typically something like 'DC1'.
+# [*kdc*]
+#   IP-address of the Key Distribution Center (KDC) server for this realm. This 
+#   should match the IP of the Samba4 AD DC you've configured.
 # [*dns_server*]
 #   Name of the DNS server. On domain controllers this should be (and defaults 
 #   to) 127.0.0.1. On member servers this should be set to the IP address of the 
@@ -58,6 +61,7 @@
 #   samba4::server::dns_server: '127.0.0.1'
 #   samba4::server::host_name: 'DC1'
 #   samba4::server::host_ip: '192.168.81.10'
+#   samba4::server::kdc: '192.168.81.10'
 #   samba4::server::role: 'dc'
 #
 # Setting up a member server:
@@ -75,6 +79,7 @@
 #   samba4::server::dns_server: '192.168.81.10'
 #   samba4::server::host_name: 'MEMBER'
 #   samba4::server::host_ip: '192.168.81.11'
+#   samba4::server::kdc: '192.168.81.10'
 #   samba4::server::role: 'member'
 #   samba4::server::fileshares:
 #     guestshare:
@@ -89,6 +94,7 @@ class samba4::server
     $domain,
     $role,
     $host_ip,
+    $kdc,
     $host_name,
     $dns_server = undef,
     $monitor_email = $::servermonitor,
@@ -101,12 +107,10 @@ if $manage == 'yes' {
 
     include ::samba4::client
 
-    class { '::samba4::server::prequisites':
+    class { '::samba4::server::install':
         role => $role,
+
     }
-
-    include ::samba4::server::install
-
     if $manage_config == 'yes' {
         class { '::samba4::server::config':
             adminpass  => $adminpass,
@@ -115,6 +119,7 @@ if $manage == 'yes' {
             role       => $role,
             host_ip    => $host_ip,
             host_name  => $host_name,
+            kdc        => $kdc,
             dns_server => $dns_server,
             fileshares => $fileshares,
         }

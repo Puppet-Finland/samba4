@@ -42,7 +42,7 @@ define samba4::fileshare
     if $valid_users {
         $valid_users_line = "valid users = ${valid_users}"
     } else {
-        $valid_users_line = "valid users ="
+        $valid_users_line = 'valid users ='
     }
 
     concat::fragment { "samba4-smb.conf-fileshare-${sharename}":
