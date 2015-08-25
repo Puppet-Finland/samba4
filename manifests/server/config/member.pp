@@ -8,12 +8,15 @@ class samba4::server::config::member
     $realm,
     $domain,
     $host_name,
+    $adminpass,
     $fileshares
 
 ) inherits samba4::params
 {
     $realm_uc = upcase($realm)
+    $realm_lc = downcase($realm)
     $domain_uc = upcase($domain)
+    $host_name_lc = downcase($host_name)
 
     # Concat is used here because it seems the only reasonable option:
     #
@@ -49,7 +52,15 @@ class samba4::server::config::member
         group  => [ 'compat', 'winbind' ],
     }
 
-    # TODO: join domain using "net ads join"
+    # Join domain unless a DNS query shows that a machine account has already 
+    # been created. Note that this approach will fail on rejoin, but 
+    # improvements can be made later.
+    exec { 'samba4-net-ads-join':
+        command => "net ads join -U administrator%${adminpass}",
+        path    => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
+        unless  => "host ${host_name_lc}.${realm_lc}",
+        require => Class['nsswitch'],
+    }
 
     # Configure pam_winbind.conf
     file { 'samba4-pam_winbind.conf':

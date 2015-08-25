@@ -52,6 +52,7 @@ class samba4::server::config
             realm      => $realm,
             domain     => $domain,
             host_name  => $host_name,
+            adminpass  => $adminpass,
             fileshares => $fileshares,
         }
     } else {

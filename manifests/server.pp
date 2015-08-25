@@ -11,8 +11,8 @@
 #   Whether to manage Samba 4 configuration using Puppet or not. Valid values 
 #   'yes' (default) and 'no'.
 # [*adminpass*]
-#   Administrator password for the Samba 4 server. Only required for the domain 
-#   controller ($role = 'dc').
+#   Administrator password for the Samba 4 domain. Required on both Domain 
+#   Controllers and Member servers.
 # [*realm*]
 #   The Kerberos realm, which will also be used as the Active Directory domain 
 #   name. This parameter will be automatically converted to uppercase as needed. 
@@ -93,7 +93,7 @@ class samba4::server
 (
     $manage = 'yes',
     $manage_config = 'yes',
-    $adminpass = undef,
+    $adminpass,
     $realm,
     $domain,
     $role,
