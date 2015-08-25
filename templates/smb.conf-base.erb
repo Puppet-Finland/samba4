@@ -8,6 +8,7 @@
   kerberos method = secrets and keytab
   encrypt passwords = yes
   template shell = /bin/bash
+  template homedir = /home/%D/%U
 
   idmap config *:backend = rid
   idmap config *:range = 10000-99999

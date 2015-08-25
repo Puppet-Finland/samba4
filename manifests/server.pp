@@ -70,6 +70,7 @@
 #   classes:
 #     - dhclient
 #     - samba4::server
+#     - sshd
 #
 #   # The member server could use DHCP, even though here we use static IPs and 
 #   # resolver configuration.
@@ -84,6 +85,9 @@
 #   samba4::server::fileshares:
 #     guestshare:
 #       path: '/srv/samba/guestshare'
+#
+#   # This is required for logins as domain user
+#   sshd::kerberosauthentication: 'yes'
 #
 class samba4::server
 (

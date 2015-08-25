@@ -50,5 +50,15 @@ class samba4::server::config::member
     }
 
     # TODO: join domain using "net ads join"
-    # TODO: configure libpam-winbind
+
+    # Configure pam_winbind.conf
+    file { 'samba4-pam_winbind.conf':
+        ensure  => present,
+        name    => '/etc/security/pam_winbind.conf',
+        content => template('samba4/pam_winbind.conf.erb'),
+        owner   => $::os::params::adminuser,
+        group   => $::os::params::admingroup,
+        mode    => '0644',
+        require => Class['samba4::server::install'],
+    }
 }
