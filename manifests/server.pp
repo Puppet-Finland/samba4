@@ -5,11 +5,11 @@
 # == Parameters
 #
 # [*manage*]
-#   Whether to manage Samba 4 using Puppet or not. Valid values 'yes' (default) 
-#   and 'no'.
+#   Whether to manage Samba 4 using Puppet or not. Valid values are true 
+#   (default) and false.
 # [*manage_config*]
 #   Whether to manage Samba 4 configuration using Puppet or not. Valid values 
-#   'yes' (default) and 'no'.
+#   are true (default) and 'false.
 # [*adminpass*]
 #   Administrator password for the Samba 4 domain. Required on both Domain 
 #   Controllers and Member servers.
@@ -42,23 +42,23 @@
 #
 class samba4::server
 (
-    $manage = 'yes',
-    $manage_config = 'yes',
-    $adminpass,
-    $realm,
-    $domain,
-    $role,
-    $host_ip,
-    $kdc,
-    $host_name,
-    $dns_server = undef,
-    $monitor_email = $::servermonitor,
-    $fileshares = {}
+    Boolean $manage = true,
+    Boolean $manage_config = true,
+            $adminpass,
+            $realm,
+            $domain,
+            $role,
+            $host_ip,
+            $kdc,
+            $host_name,
+            $dns_server = undef,
+            $monitor_email = $::servermonitor,
+            $fileshares = {}
 
 ) inherits samba4::params
 {
 
-if $manage == 'yes' {
+if $manage {
 
     include ::samba4::client
 
@@ -66,7 +66,7 @@ if $manage == 'yes' {
         role => $role,
 
     }
-    if $manage_config == 'yes' {
+    if $manage_config {
         class { '::samba4::server::config':
             adminpass  => $adminpass,
             realm      => $realm,
