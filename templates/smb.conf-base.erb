@@ -1,9 +1,9 @@
 [global]
 
-  netbios name = <%= host_name %>
-  workgroup = <%= domain_uc %>
+  netbios name = <%= @host_name %>
+  workgroup = <%= @domain_uc %>
   security = ADS
-  realm = <%= realm_uc %>
+  realm = <%= @realm_uc %>
   dedicated keytab file = /etc/krb5.keytab
   kerberos method = secrets and keytab
   encrypt passwords = yes

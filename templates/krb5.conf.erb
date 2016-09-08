@@ -1,5 +1,5 @@
 [libdefaults]
-	default_realm = <%= realm_uc %>
+	default_realm = <%= @realm_uc %>
 
 # The following krb5.conf variables are only for MIT Kerberos.
 	krb4_config = /etc/krb.conf
@@ -37,14 +37,14 @@
 	fcc-mit-ticketflags = true
 
 [realms]
-    <%= realm_uc %> = {
-        kdc = <%= kdc %>
-        admin_server = <%= kdc %>
-        default_domain = <%= realm_lc %>
+    <%= @realm_uc %> = {
+        kdc = <%= @kdc %>
+        admin_server = <%= @kdc %>
+        default_domain = <%= @realm_lc %>
     }
 
 [domain_realm]
-    .<%= realm_lc %> = <%= realm_uc %>
+    .<%= @realm_lc %> = <%= @realm_uc %>
 
 [login]
 	krb4_convert = true
