@@ -22,8 +22,7 @@
 #   any punctuation marks in it. Typically this is the first part of the AD 
 #   domain name, e.g. 'SMB'.
 # [*role*]
-#   Role of this server. Currently the only valid value is 'dc', although Samba 
-#   4 itself supports others as well.
+#   Role of this server. Either 'dc' or 'member'.
 # [*host_ip*]
 #   IP-address of this host.
 # [*host_name*]

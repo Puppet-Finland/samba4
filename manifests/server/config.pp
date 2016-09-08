@@ -5,15 +5,15 @@
 #
 class samba4::server::config
 (
-    $adminpass,
-    $realm,
-    $domain,
-    $role,
-    $host_ip,
-    $host_name,
-    $kdc,
-    $dns_server,
-    $fileshares
+    String              $adminpass,
+    String              $realm,
+    String              $domain,
+    Enum['dc','member'] $role,
+    String              $host_ip,
+    String              $host_name,
+    String              $kdc,
+    String              $dns_server,
+    Hash                $fileshares
 
 ) inherits samba4::params
 {
