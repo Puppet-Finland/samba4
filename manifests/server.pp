@@ -31,9 +31,17 @@
 #   IP-address of the Key Distribution Center (KDC) server for this realm. This 
 #   should match the IP of the Samba4 AD DC you've configured.
 # [*dns_server*]
-#   Name of the DNS server. On domain controllers this should be (and defaults 
-#   to) 127.0.0.1. On member servers this should be set to the IP address of the 
-#   domain controller.
+#   Name of the DNS server, can be a string or an array. On domain controllers 
+#   this defaults to '127.0.0.1'. However, when bootstrapping domain controllers 
+#   you should use an array and include the primary DNS server of the internal 
+#   network also, e.g. use ['127.0.0.1','192.168.84.5']). This needs to be done 
+#   to prevent the resolvconf class nuking /etc/resolv.conf before Puppet has 
+#   time to configure Samba 4's built-in resolver.
+#
+#   On member servers this should be set to the IP address of the domain 
+#   controller. The same precaution about using a backup domain controller 
+#   applies here.
+
 # [*monitor_email*]
 #   Server monitoring email. Defaults to $::servermonitor.
 # [*fileshares*]

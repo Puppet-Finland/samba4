@@ -12,7 +12,7 @@ class samba4::server::config
     String              $host_ip,
     String              $host_name,
     String              $kdc,
-    String              $dns_server,
+    Variant[String,Array] $dns_server,
     Hash                $fileshares
 
 ) inherits samba4::params
@@ -23,7 +23,7 @@ class samba4::server::config
     $realm_uc = upcase($realm)
 
     class { '::resolv_conf':
-        nameservers => [$dns_server],
+        nameservers => $dns_server,
         domainname  => $realm_lc,
     }
 
