@@ -49,8 +49,6 @@
 #
 class samba4::server
 (
-    Boolean $manage = true,
-    Boolean $manage_config = true,
             $adminpass,
             $realm,
             $domain,
@@ -58,6 +56,8 @@ class samba4::server
             $host_ip,
             $kdc,
             $host_name,
+    Boolean $manage = true,
+    Boolean $manage_config = true,
             $dns_server = undef,
             $monitor_email = $::servermonitor,
             $fileshares = {}
