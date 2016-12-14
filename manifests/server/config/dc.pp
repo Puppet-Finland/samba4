@@ -50,4 +50,21 @@ class samba4::server::config::dc
         notify  => Service[$::samba4::params::samba_ad_dc_service_name],
         before  => [ Class['resolv_conf'], File['samba4-krb5.conf'] ],
     }
+
+    # Modify smb.conf after provisioning
+
+    # TLS is now enforced for simple binds, and while that is generally a good 
+    # idea, it breaks existing setups. So we revert it for now. For details see
+    #
+    # <https://wiki.samba.org/index.php/Updating_Samba#Default_for_LDAP_Connections_Requires_Strong_Authentication>
+    #
+    ini_setting { 'samba4-ldap_server_require_strong_auth':
+        ensure  => present,
+        path    => $::samba4::params::samba_config_name,
+        section => 'global',
+        setting => 'ldap server require strong auth',
+        value   => 'no',
+        notify  => Service[$::samba4::params::samba_ad_dc_service_name],
+        require => Exec['samba4-domain-provisioning'],
+    }
 }
