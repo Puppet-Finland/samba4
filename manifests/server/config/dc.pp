@@ -47,7 +47,7 @@ class samba4::server::config::dc
         command => "samba-tool domain provision --use-rfc2307 --dns-backend=SAMBA_INTERNAL --adminpass=\"${adminpass}\" --realm=${realm_uc} --domain=${domain_uc} --server-role=${role} --host-ip=${host_ip} --host-name=${host_name}",
         creates => "${::samba4::params::sysvol}/${realm_lc}",
         require => [ Exec['rename-smb.conf'], Class['samba4::server::install'] ],
-        notify  => Class['samba4::server::service'],
+        notify  => Service[$::samba4::params::samba_ad_dc_service_name],
         before  => [ Class['resolv_conf'], File['samba4-krb5.conf'] ],
     }
 }
