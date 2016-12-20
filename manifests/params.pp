@@ -24,28 +24,31 @@ class samba4::params {
             $samba_config_name = "${samba_config_dir}/smb.conf"
             $krb5_config_name = '/etc/krb5.conf'
 
-            $samba_smbd_service_name = 'smbd'
-            $samba_nmbd_service_name = 'nmbd'
-            $samba_winbind_service_name = 'winbind'
+            $smbd_service_name = 'smbd'
+            $nmbd_service_name = 'nmbd'
+            $winbindd_service_name = 'winbind'
             $samba_ad_dc_service_name = 'samba-ad-dc'
 
             $service_start_cmd = "${::os::params::systemctl} start"
             $service_stop_cmd  = "${::os::params::systemctl} stop"
 
-            $samba_smbd_service_start = "${service_start_cmd} ${samba_smbd_service_name}"
-            $samba_nmbd_service_start = "${service_start_cmd} ${samba_nmbd_service_name}"
-            $samba_winbind_service_start = "${service_start_cmd} ${samba_winbind_service_name}"
+            $smbd_service_start = "${service_start_cmd} ${smbd_service_name}"
+            $nmbd_service_start = "${service_start_cmd} ${nmbd_service_name}"
+            $winbindd_service_start = "${service_start_cmd} ${winbindd_service_name}"
             $samba_ad_dc_service_start = "${service_start_cmd} ${samba_ad_dc_service_name}"
 
-            $samba_smbd_service_stop = "${service_stop_cmd} ${samba_smbd_service_name}"
-            $samba_nmbd_service_stop = "${service_stop_cmd} ${samba_nmbd_service_name}"
-            $samba_winbind_service_stop = "${service_stop_cmd} ${samba_winbind_service_name}"
+            $smbd_service_stop = "${service_stop_cmd} ${smbd_service_name}"
+            $nmbd_service_stop = "${service_stop_cmd} ${nmbd_service_name}"
+            $winbindd_service_stop = "${service_stop_cmd} ${winbindd_service_name}"
             $samba_ad_dc_service_stop = "${service_stop_cmd} ${samba_ad_dc_service_name}"
 
-            $piddir = '/var/run/samba'
+            $piddir = '/run/samba'
             $libdir = '/var/lib/samba'
             $sysvol = "${libdir}/sysvol"
+
             $samba_pidfile = "${piddir}/samba.pid"
+            $smbd_pidfile = "${piddir}/smbd.pid"
+            $winbindd_pidfile = "${piddir}/winbindd.pid"
         }
         default: {
             fail("Unsupported distribution: ${::lsbdistcodename}")

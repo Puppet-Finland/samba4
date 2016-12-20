@@ -9,7 +9,10 @@
 #   (default) and false.
 # [*manage_config*]
 #   Whether to manage Samba 4 configuration using Puppet or not. Valid values 
-#   are true (default) and 'false.
+#   are true (default) and false.
+# [*manage_monit*]
+#   Let monit monitor, alert about and possibly restart Samba services. Valid
+#   values are true (default) and false.
 # [*adminpass*]
 #   Administrator password for the Samba 4 domain. Required on both Domain 
 #   Controllers and Member servers.
@@ -58,6 +61,7 @@ class samba4::server
             $host_name,
     Boolean $manage = true,
     Boolean $manage_config = true,
+    Boolean $manage_monit = true,
             $dns_server = undef,
             $monitor_email = $::servermonitor,
             $fileshares = {}
@@ -89,6 +93,13 @@ if $manage {
 
     class { '::samba4::server::service':
         role => $role,
+    }
+
+    if $manage_monit {
+        class { '::samba4::server::monit':
+            role          => $role,
+            monitor_email => $monitor_email,
+        }
     }
 }
 }

@@ -1,0 +1,5 @@
+### THIS FILE IS MANAGED BY PUPPET. ANY MANUAL CHANGES WILL GET OVERWRITTEN.
+#
+check process winbindd with pidfile <%= scope['samba4::params::winbindd_pidfile'] %>
+    start program "<%= scope['samba4::params::winbindd_service_start'] %>"
+    stop  program "<%= scope['samba4::params::winbindd_service_stop'] %>"

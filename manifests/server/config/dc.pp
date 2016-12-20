@@ -24,7 +24,7 @@ class samba4::server::config::dc
 
     # Stop Samba services
     exec { 'stop-smbd':
-        command => $::samba4::params::samba_smbd_service_stop,
+        command => $::samba4::params::smbd_service_stop,
         require => Class['samba4::server::install'],
         unless  => "test -d ${::samba4::params::sysvol}",
     }
